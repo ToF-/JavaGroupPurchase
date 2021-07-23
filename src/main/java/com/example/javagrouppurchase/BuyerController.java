@@ -1,9 +1,7 @@
 package com.example.javagrouppurchase;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -24,8 +22,15 @@ public class BuyerController {
     @GetMapping("/{name}")
     public Buyer buyerByName(@PathVariable("name") String name) {
         if(buyers.containsKey(name)) {
+            System.out.println("get " + name + ":" +buyers.get(name));
             return buyers.get(name);
         }
         return null;
+    }
+    @PostMapping(consumes = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Buyer postBuyer(@RequestBody Buyer buyer) {
+        System.out.println("post " + buyer);
+        return buyer;
     }
 }
